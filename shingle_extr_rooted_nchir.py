@@ -30,7 +30,7 @@ with open(p_in, 'r') as fi_in:
                         bond = mol.GetBondWithIdx(bond_id)
                         atoms.add(bond.GetBeginAtomIdx())
                         atoms.add(bond.GetEndAtomIdx())
-                    shingle = Chem.rdmolfiles.MolFragmentToSmiles(mol,list(atoms),bonds,0,0,False,False,atm,False,False,False)
+                    shingle = Chem.rdmolfiles.MolFragmentToSmiles(mol,list(atoms),bonds,0,0,False,False,atm,True,False,False)
                     '''
                     # the slower method
                     submol = Chem.PathToSubmol(mol,bonds)

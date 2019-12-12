@@ -65,7 +65,7 @@ if __name__ == "__main__":
     db_shingles = False
     if rooted:
         if min_freq:
-            with open('shingle_libs/chembl_24_1_shingle_scores_log10_rooted_nchir_min_freq_100.pyc', 'rb') as pyc:
+            with open('shingle_libs/chembl_24_1_shingle_scores_log10_rooted_nchir_min_freq_100.pkl', 'rb') as pyc:
                 db_shingles = pickle.load(pyc)
         else:      
             #with open('UNPD_shingleDB_rt_r3.pyc', 'rb') as pyc:
@@ -92,7 +92,6 @@ if __name__ == "__main__":
             mol = Chem.MolFromSmiles(smi)
 
             for atm_idx in range(mol.GetNumAtoms()):
-                atm = mol.GetAtomWithIdx( atm_idx )
                 for N in range(1,radius_constr):
                     bonds = AllChem.FindAtomEnvironmentOfRadiusN(mol, N, atm_idx)
 
@@ -107,7 +106,7 @@ if __name__ == "__main__":
                         atoms.add(bond.GetEndAtomIdx())
                     
                     if rooted:
-                        new_shingle = Chem.rdmolfiles.MolFragmentToSmiles(mol,list(atoms),bonds,0,0,False,False,atm,True,False,False)
+                        new_shingle = Chem.rdmolfiles.MolFragmentToSmiles(mol,list(atoms),bonds,0,0,False,False,atm_idx,True,False,False)
                     else:
                         new_shingle = Chem.rdmolfiles.MolFragmentToSmiles(mol,list(atoms),bonds,0,0,False,False,-1,True,False,False)
                     '''
