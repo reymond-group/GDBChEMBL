@@ -15,21 +15,21 @@ Simply clone the repository and run the scripts with the desired parameters.
 * CLscore.py
 * CLscore_sequential.py
 
-These are scripts to calculate CLscore (**C**hEMBL-**L**ikeness **Score**) as done for the generation of GDBChEMBL.
-CLscore.py dynamically parallelizes computation according to available CPU cores inside the current working environment.
+These are scripts to calculate CLscore (**C**hEMBL-**L**ikeness **Score**) as done for the generation of GDBChEMBL.\
+CLscore.py dynamically parallelizes computation according to available CPU cores inside the current working environment.\
 CLscore_sequential.py does not parallelize or has to be parallelized using other methods.
 
-CLscore values are written appended to their respective SMILES string.
+CLscore values are written appended to their respective SMILES string.\
 When using default parameters, both scripts only expect parameters for input and an output file path:
 ```
 python CLscore.py -i $inFile -o $outFile
 ```
 
-Other parameters:
---cutOffScore	Only write query structures if their CLscore is greater or equal to a given value. (default: 0.0)
---considerRareShingles	Also consider shingles that occur less than 100 times in the reference database. (default: False)
---radius		Maximum radius of circular substructures around the rooting atom. Note that when using the ChEMBL shingle library, maximum radius will be 3 (default). For larger radii, the reference database would have to be read out accordingly.
---rooted		Use rooted shingles (default: True). This means reference shingles are canonical but always starting at the central atom of a circular substructure. False means shingles in the database are canonicalized but not rooted. It is recommended to use rooted shingles.
+Other parameters:\
+--cutOffScore	Only write query structures if their CLscore is greater or equal to a given value. (default: 0.0)\
+--considerRareShingles	Also consider shingles that occur less than 100 times in the reference database. (default: False)\
+--radius		Maximum radius of circular substructures around the rooting atom. Note that when using the ChEMBL shingle library, maximum radius will be 3 (default). For larger radii, the reference database would have to be read out accordingly.\
+--rooted		Use rooted shingles (default: True). This means reference shingles are canonical but always starting at the central atom of a circular substructure. False means shingles in the database are canonicalized but not rooted. It is recommended to use rooted shingles.\
 --weighted	Calculate score by summing up log10 of frequency of occurence inside the reference database. (default: True). When set to False, score will add 1 for every shingle inside the reference database, irrespective of how often it occurs. It is recommended to use the actual CLscore with weighted shingles.
 
 Example:
