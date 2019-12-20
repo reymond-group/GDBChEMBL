@@ -1,9 +1,11 @@
+import sys
+import os
+import pickle
+import math
+from rdkit import Chem
+from rdkit.Chem import AllChem
+
 if __name__ == "__main__":
-    import sys
-    import pickle
-    import math
-    from rdkit import Chem
-    from rdkit.Chem import AllChem
 
     p_in = ''
     p_out = ''
@@ -16,8 +18,9 @@ if __name__ == "__main__":
     
     # parse arguments
     arglen = len(sys.argv)
-    args = enumerate(sys.argv)
-    for i, arg in args:
+    
+    for i, arg in enumerate(sys.argv[1:],1):
+
         last_inicates_explicit = False
             
         if arg.startswith('--'):
@@ -39,27 +42,26 @@ if __name__ == "__main__":
         elif arg.startswith('-'):
             last_inicates_explicit = True
 
-            if arg == '-i' and  i < arglen:
+            if arg == '-i' and  i < arglen and os.path.isfile(sys.argv[i+1]):
                 p_in = sys.argv[i+1]
 
-            elif arg == '-o' and  i < arglen:
+            elif arg == '-o' and  i < arglen and sys.argv[i+1] != p_in:
                 p_out = sys.argv[i+1]
 
-        elif not last_inicates_explicit and not p_in and sys.argv[i].isalpha():
+        elif not last_inicates_explicit and p_in == '' and os.path.isfile(sys.argv[i]):
             p_in = sys.argv[i]
             last_inicates_explicit = False
 
-        elif not last_inicates_explicit and not p_out and sys.argv[i].isalpha():
+        elif not last_inicates_explicit and p_out == '' and sys.argv[i] != p_in:
             p_out = sys.argv[i]
             last_inicates_explicit = False
   
-    if not p_in:
+    if p_in == '':
         print('Please give source file path as argument...')
         exit()
-    if not p_out:
+    if p_out == '':
         p_out = '.'.join(p_in.split('.')[:-1])+'_res.'+p_in.split('.')[-1]
         print('No path given to write scores. Will write to:\n'+p_out)
-
 
     # Load respective shingle db
     db_shingles = False
